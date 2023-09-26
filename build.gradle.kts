@@ -9,8 +9,10 @@
 plugins {
     id("java-library")
     id("jacoco")
+    `maven-publish`
 }
 
+group = "com.github.MockBukkit"
 version = "v1.8-spigot-SNAPSHOT"
 
 repositories {
@@ -18,16 +20,33 @@ repositories {
     mavenLocal()
 
     maven("https://hub.spigotmc.org/nexus/content/repositories/public/")
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://repo.md-5.net/content/groups/public/")
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+    testImplementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     implementation("org.apache.commons:commons-io:1.3.2")
-    testImplementation("junit:junit:4.12")
+    implementation("junit:junit:4.12")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = "MockBukkit"
+
+            from(components["java"])
+        }
+    }
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.named<Test>("test") {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
 }
