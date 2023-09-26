@@ -16,8 +16,8 @@ group = "com.github.MockBukkit"
 version = "v1.8-spigot-SNAPSHOT"
 
 repositories {
-    mavenCentral()
     mavenLocal()
+    mavenCentral()
 
     maven("https://hub.spigotmc.org/nexus/content/repositories/public/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -28,7 +28,9 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     testImplementation("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
     implementation("org.apache.commons:commons-io:1.3.2")
-    implementation("junit:junit:4.12")
+
+//    implementation("junit:junit:4.12")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 publishing {

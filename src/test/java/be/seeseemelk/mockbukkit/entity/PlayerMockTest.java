@@ -1,16 +1,13 @@
 package be.seeseemelk.mockbukkit.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeTrue;
-
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.ServerMock;
+import be.seeseemelk.mockbukkit.TestPlugin;
+import be.seeseemelk.mockbukkit.block.BlockMock;
+import be.seeseemelk.mockbukkit.inventory.ChestInventoryMock;
+import be.seeseemelk.mockbukkit.inventory.InventoryMock;
+import be.seeseemelk.mockbukkit.inventory.InventoryViewMock;
+import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -23,18 +20,16 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.TestPlugin;
-import be.seeseemelk.mockbukkit.block.BlockMock;
-import be.seeseemelk.mockbukkit.inventory.ChestInventoryMock;
-import be.seeseemelk.mockbukkit.inventory.InventoryMock;
-import be.seeseemelk.mockbukkit.inventory.InventoryViewMock;
-import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerMockTest
 {
@@ -42,7 +37,7 @@ public class PlayerMockTest
 	private UUID uuid;
 	private PlayerMock player;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		server = MockBukkit.mock();
@@ -50,7 +45,7 @@ public class PlayerMockTest
 		player = new PlayerMock("player", uuid);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception
 	{
 		MockBukkit.unload();
@@ -99,10 +94,10 @@ public class PlayerMockTest
 		player.assertGameMode(GameMode.SURVIVAL);
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertGameMode_WrongGameMode_Asserts()
 	{
-		player.assertGameMode(GameMode.CREATIVE);
+		assertThrows(AssertionError.class, () -> player.assertGameMode(GameMode.CREATIVE));
 	}
 
 	@Test
@@ -373,7 +368,7 @@ public class PlayerMockTest
 		{
 			player.setGameMode(gm);
 			Block block = server.addSimpleWorld("world").getBlockAt(0, 0, 0);
-			assertFalse("Block was damaged while in gamemode " + gm.name(), player.simulateBlockDamage(block));
+			assertFalse(player.simulateBlockDamage(block), "Block was damaged while in gamemode " + gm.name());
 		}
 	}
 	
@@ -401,7 +396,7 @@ public class PlayerMockTest
 		BlockMock block = server.addSimpleWorld("world").getBlockAt(0, 0, 0);
 		block.setType(Material.STONE);
 		assumeTrue(player.simulateBlockDamage(block));
-		assertFalse("BlockBreakEvent was fired", wasBroken.get());
+		assertFalse(wasBroken.get(), "BlockBreakEvent was fired");
 		block.assertType(Material.STONE);
 	}
 	
@@ -429,7 +424,7 @@ public class PlayerMockTest
 		BlockMock block = server.addSimpleWorld("world").getBlockAt(0, 0, 0);
 		block.setType(Material.STONE);
 		assumeTrue(player.simulateBlockDamage(block));
-		assertEquals("BlockBreakEvent was not fired only once", 1, brokenCount.get());
+		assertEquals(1, brokenCount.get(), "BlockBreakEvent was not fired only once");
 		block.assertType(Material.AIR);
 	}
 	
@@ -457,7 +452,7 @@ public class PlayerMockTest
 		BlockMock block = server.addSimpleWorld("world").getBlockAt(0, 0, 0);
 		block.setType(Material.STONE);
 		assumeTrue(player.simulateBlockBreak(block));
-		assertEquals("BlockBreakEvent was not fired only once", 1, brokenCount.get());
+		assertEquals(1, brokenCount.get(), "BlockBreakEvent was not fired only once");
 		block.assertType(Material.AIR);
 	}
 	

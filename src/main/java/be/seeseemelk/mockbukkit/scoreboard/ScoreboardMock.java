@@ -1,21 +1,11 @@
 package be.seeseemelk.mockbukkit.scoreboard;
 
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.bukkit.OfflinePlayer;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
-
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.scoreboard.*;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ScoreboardMock implements Scoreboard
 {

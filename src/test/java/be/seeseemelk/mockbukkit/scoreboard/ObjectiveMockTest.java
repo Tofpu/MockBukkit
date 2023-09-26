@@ -1,19 +1,15 @@
 package be.seeseemelk.mockbukkit.scoreboard;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assume.assumeNotNull;
-
-import org.bukkit.scoreboard.Score;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.bukkit.scoreboard.Score;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.Assume.assumeNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ObjectiveMockTest
 {
@@ -21,7 +17,7 @@ public class ObjectiveMockTest
 	private ScoreboardMock scoreboard;
 	private ObjectiveMock objective;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		server = MockBukkit.mock();
@@ -29,7 +25,7 @@ public class ObjectiveMockTest
 		objective = scoreboard.registerNewObjective("Objective", "dummy");
 	}
 	
-	@After
+	@AfterEach
 	public void tearDown() throws Exception
 	{
 		MockBukkit.unload();
@@ -49,8 +45,8 @@ public class ObjectiveMockTest
 	public void setDisplayName_AnyString_DisplayNameSet()
 	{
 		objective.setDisplayName("New name");
-		assertEquals("Display name not changed", "New name", objective.getDisplayName());
-		assertEquals("Internal name was changed", "Objective", objective.getName());
+		assertEquals("New name", objective.getDisplayName(), "Display name not changed");
+		assertEquals("Objective", objective.getName(), "Internal name was changed");
 	}
 	
 	@Test
@@ -58,7 +54,7 @@ public class ObjectiveMockTest
 	{
 		assumeNotNull("Objective was not registered", scoreboard.getObjective(objective.getName()));
 		objective.unregister();
-		assertNull("Objective was not registered", scoreboard.getObjective(objective.getName()));
+		assertNull(scoreboard.getObjective(objective.getName()), "Objective was not registered");
 	}
 	
 	@Test

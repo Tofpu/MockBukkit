@@ -1,13 +1,12 @@
 package be.seeseemelk.mockbukkit.scoreboard;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
-import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ObjectiveMock implements Objective
 {

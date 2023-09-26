@@ -1,18 +1,18 @@
 package be.seeseemelk.mockbukkit;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MockBanList_MockBanEntryListTest
 {
 	private Date date;
 	private MockBanList.MockBanEntry entry;
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		date = new Date();

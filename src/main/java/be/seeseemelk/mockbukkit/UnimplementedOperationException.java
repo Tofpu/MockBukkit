@@ -1,8 +1,8 @@
 package be.seeseemelk.mockbukkit;
 
-import org.junit.AssumptionViolatedException;
+import org.opentest4j.TestAbortedException;
 
-public class UnimplementedOperationException extends AssumptionViolatedException
+public class UnimplementedOperationException extends TestAbortedException
 {
 	private static final long serialVersionUID = 1L;
 

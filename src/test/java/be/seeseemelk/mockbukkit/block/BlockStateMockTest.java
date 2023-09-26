@@ -1,8 +1,8 @@
 package be.seeseemelk.mockbukkit.block;
 
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class BlockStateMockTest
 {

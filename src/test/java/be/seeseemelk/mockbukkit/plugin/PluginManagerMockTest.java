@@ -1,14 +1,8 @@
 package be.seeseemelk.mockbukkit.plugin;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.Iterator;
-
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.ServerMock;
+import be.seeseemelk.mockbukkit.TestPlugin;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -17,13 +11,14 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.TestPlugin;
+import java.util.Collection;
+import java.util.Iterator;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PluginManagerMockTest
 {
@@ -31,7 +26,7 @@ public class PluginManagerMockTest
 	private PluginManagerMock pluginManager;
 	private TestPlugin plugin;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		server = MockBukkit.mock();
@@ -39,7 +34,7 @@ public class PluginManagerMockTest
 		plugin = MockBukkit.load(TestPlugin.class);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception
 	{
 		MockBukkit.unload();
@@ -104,15 +99,13 @@ public class PluginManagerMockTest
 		});
 	}
 	
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertEventFired_PredicateFalse_Asserts()
 	{
 		Player player = server.addPlayer();
 		BlockBreakEvent eventToFire = new BlockBreakEvent(null, player);
 		pluginManager.callEvent(eventToFire);
-		pluginManager.assertEventFired(event -> {
-			return false;
-		});
+		assertThrows(AssertionError.class, () -> pluginManager.assertEventFired(event -> false));
 	}
 	
 	@Test
@@ -123,10 +116,10 @@ public class PluginManagerMockTest
 		pluginManager.assertEventFired(BlockBreakEvent.class);
 	}
 	
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertEventFired_EventWasNotFired_Asserts()
 	{
-		pluginManager.assertEventFired(BlockBreakEvent.class);
+		assertThrows(AssertionError.class, () -> pluginManager.assertEventFired(BlockBreakEvent.class));
 	}
 	
 	@Test
@@ -166,7 +159,7 @@ public class PluginManagerMockTest
 		assertTrue(plugin.isEnabled());
 		pluginManager.disablePlugin(plugin);
 		pluginManager.assertEventFired(PluginDisableEvent.class, event -> event.getPlugin().equals(plugin));
-		assertFalse("Plugin was not disabled", plugin.isEnabled());
+		assertFalse(plugin.isEnabled(), "Plugin was not disabled");
 		assertTrue(plugin.onDisableExecuted);
 	}
 	
@@ -176,7 +169,7 @@ public class PluginManagerMockTest
 		TestPlugin plugin = MockBukkit.load(TestPlugin.class);
 		assertTrue(plugin.isEnabled());
 		pluginManager.disablePlugins();
-		assertFalse("Plugin was not disabled", plugin.isEnabled());
+		assertFalse(plugin.isEnabled(), "Plugin was not disabled");
 		assertTrue(plugin.onDisableExecuted);
 	}
 	
@@ -186,7 +179,7 @@ public class PluginManagerMockTest
 		TestPlugin plugin = MockBukkit.load(TestPlugin.class);
 		assertTrue(plugin.isEnabled());
 		pluginManager.clearPlugins();
-		assertFalse("Plugin was not disabled", plugin.isEnabled());
+		assertFalse(plugin.isEnabled(), "Plugin was not disabled");
 		Plugin[] plugins = pluginManager.getPlugins();
 		assertEquals(0, plugins.length);
 	}

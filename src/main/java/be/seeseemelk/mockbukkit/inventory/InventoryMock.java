@@ -1,7 +1,11 @@
 package be.seeseemelk.mockbukkit.inventory;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,13 +14,8 @@ import java.util.ListIterator;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
-
-import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class InventoryMock implements org.bukkit.inventory.Inventory
 {
@@ -101,7 +100,7 @@ public abstract class InventoryMock implements org.bukkit.inventory.Inventory
 	{
 		int n = getNumberOfItems(item);
 		String message = String.format("Inventory contains only <%d> but expected at least <%d>", n, amount);
-		assertTrue(message, n >= amount);
+		assertTrue(n >= amount, message);
 	}
 	
 	/**

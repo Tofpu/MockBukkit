@@ -1,22 +1,9 @@
 package be.seeseemelk.mockbukkit.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.LinkedTransferQueue;
-
-import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
-import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.World;
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import be.seeseemelk.mockbukkit.command.MessageTarget;
+import be.seeseemelk.mockbukkit.metadata.MetadataTable;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -28,9 +15,10 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-import be.seeseemelk.mockbukkit.UnimplementedOperationException;
-import be.seeseemelk.mockbukkit.command.MessageTarget;
-import be.seeseemelk.mockbukkit.metadata.MetadataTable;
+import java.util.*;
+import java.util.concurrent.LinkedTransferQueue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class EntityMock implements Entity, MessageTarget
 {
@@ -77,8 +65,8 @@ public abstract class EntityMock implements Entity, MessageTarget
 	{
 		double distance = location.distance(expectedLocation);
 		assertEquals(expectedLocation.getWorld(), location.getWorld());
-		assertTrue(String.format("Distance was <%.3f> but should be less than or equal to <%.3f>", distance,
-				maximumDistance), distance <= maximumDistance);
+		assertTrue(distance <= maximumDistance, String.format("Distance was <%.3f> but should be less than or equal to <%.3f>", distance,
+						maximumDistance));
 	}
 	
 	/**
@@ -89,7 +77,7 @@ public abstract class EntityMock implements Entity, MessageTarget
 	 */
 	public void assertTeleported(Location expectedLocation, double maximumDistance)
 	{
-		assertTrue("Player did not teleport", teleported);
+		assertTrue(teleported, "Player did not teleport");
 		assertLocation(expectedLocation, maximumDistance);
 		teleported = false;
 	}
@@ -100,7 +88,7 @@ public abstract class EntityMock implements Entity, MessageTarget
 	 */
 	public void assertNotTeleported()
 	{
-		assertFalse("Player was teleported", teleported);
+		assertFalse(teleported, "Player was teleported");
 		teleported = false;
 	}
 	

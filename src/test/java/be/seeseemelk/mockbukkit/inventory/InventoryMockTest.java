@@ -1,36 +1,31 @@
 package be.seeseemelk.mockbukkit.inventory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import be.seeseemelk.mockbukkit.MockBukkit;
+import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.ItemStack;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.ItemStack;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import be.seeseemelk.mockbukkit.MockBukkit;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryMockTest
 {
 	private InventoryMock inventory;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		MockBukkit.mock();
 		inventory = new SimpleInventoryMock(null, "Inventory", 9, InventoryType.CHEST);
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception
 	{
 		MockBukkit.unload();
@@ -187,11 +182,11 @@ public class InventoryMockTest
 		inventory.assertTrueForAll(itemstack -> itemstack == null);
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertTrueForAll_ChecksIfNullOnNonEmptyInventory_Asserts()
 	{
 		inventory.addItem(new ItemStack(Material.DIRT, 1));
-		inventory.assertTrueForAll(itemstack -> itemstack == null);
+		assertThrows(AssertionError.class, () -> inventory.assertTrueForAll(itemstack -> itemstack == null));
 	}
 
 	@Test
@@ -214,11 +209,11 @@ public class InventoryMockTest
 		inventory.assertTrueForSome(itemstack -> itemstack.getAmount() > 0);
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertTrueForSome_NoItemsMeetCondition_Asserts()
 	{
 		inventory.addItem(new ItemStack(Material.DIRT, 1));
-		inventory.assertTrueForSome(itemstack -> itemstack.getAmount() > 16);
+		assertThrows(AssertionError.class, () -> inventory.assertTrueForSome(itemstack -> itemstack.getAmount() > 16));
 	}
 
 	@Test
@@ -228,11 +223,11 @@ public class InventoryMockTest
 		inventory.assertContainsAny(new ItemStack(Material.DIRT));
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertContainsAny_DoesNotContainThem_Asserts()
 	{
 		inventory.addItem(new ItemStack(Material.GRASS, 16));
-		inventory.assertContainsAny(new ItemStack(Material.DIRT));
+		assertThrows(AssertionError.class, () -> inventory.assertContainsAny(new ItemStack(Material.DIRT)));
 	}
 
 	@Test
@@ -249,10 +244,10 @@ public class InventoryMockTest
 		inventory.assertContainsAtLeast(new ItemStack(Material.DIRT), 4);
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertContainsAtLeast_DoesNotContainEnough_Asserts()
 	{
 		inventory.addItem(new ItemStack(Material.GRASS, 3));
-		inventory.assertContainsAtLeast(new ItemStack(Material.DIRT), 4);
+		assertThrows(AssertionError.class, () -> inventory.assertContainsAtLeast(new ItemStack(Material.DIRT), 4));
 	}
 }

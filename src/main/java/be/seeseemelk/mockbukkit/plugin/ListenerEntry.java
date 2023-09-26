@@ -1,11 +1,11 @@
 package be.seeseemelk.mockbukkit.plugin;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * The {@code ListenerEntry} is a class that represents a single event handler

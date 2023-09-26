@@ -1,23 +1,19 @@
 package be.seeseemelk.mockbukkit.scoreboard;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreboardMockTest
 {
 	private ScoreboardMock scoreboard;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		scoreboard = new ScoreboardMock();
@@ -50,7 +46,7 @@ public class ScoreboardMockTest
 		
 		Set<Objective> objectives = scoreboard.getObjectives();
 		
-		assertEquals("getObjectives() did not return 2 objectives", 2, objectives.size());
+		assertEquals(2, objectives.size(), "getObjectives() did not return 2 objectives");
 		assertTrue(objectives.contains(objective1));
 		assertTrue(objectives.contains(objective2));
 	}

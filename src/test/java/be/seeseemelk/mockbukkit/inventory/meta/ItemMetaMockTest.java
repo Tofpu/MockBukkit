@@ -1,20 +1,18 @@
 package be.seeseemelk.mockbukkit.inventory.meta;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemMetaMockTest
 {
 	private ItemMetaMock meta;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		meta = new ItemMetaMock();
 	}
@@ -177,11 +175,11 @@ public class ItemMetaMockTest
 		meta.assertHasNoLore();
 	}
 	
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertHasNoLore_HasNoLore_Asserts()
 	{
 		meta.setLore(Arrays.asList("Hello", "world"));
-		meta.assertHasNoLore();
+		assertThrows(AssertionError.class, () -> meta.assertHasNoLore());
 	}
 	
 	@Test
@@ -191,11 +189,11 @@ public class ItemMetaMockTest
 		meta.assertLore("Hello", "world");
 	}
 	
-	@Test(expected = AssertionError.class)
+	@Test
 	public void assertLore_InorrectLore_Asserts()
 	{
 		meta.setLore(Arrays.asList("Hello", "world"));
-		meta.assertLore("Something", "else");
+		assertThrows(AssertionError.class, () -> meta.assertLore("Something", "else"));
 	}
 }
 

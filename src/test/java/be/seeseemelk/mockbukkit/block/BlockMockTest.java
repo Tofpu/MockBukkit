@@ -1,21 +1,18 @@
 package be.seeseemelk.mockbukkit.block;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import be.seeseemelk.mockbukkit.WorldMock;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import be.seeseemelk.mockbukkit.WorldMock;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BlockMockTest
 {
 	private BlockMock block;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		block = new BlockMock();
@@ -97,12 +94,13 @@ public class BlockMockTest
 		block.setType(Material.DIRT);
 		block.assertType(Material.DIRT);
 	}
-	
-	@Test(expected = AssertionError.class)
+
+	@Test
 	public void assertType_IncorrectType_Fails()
 	{
 		block.setType(Material.STONE);
-		block.assertType(Material.DIRT);
+		assertThrows(AssertionError.class, () -> {
+			block.assertType(Material.DIRT);
+		});
 	}
-
 }

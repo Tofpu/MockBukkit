@@ -1,20 +1,11 @@
 package be.seeseemelk.mockbukkit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
+import be.seeseemelk.mockbukkit.command.CommandResult;
+import be.seeseemelk.mockbukkit.entity.EntityMock;
+import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import be.seeseemelk.mockbukkit.entity.PlayerMockFactory;
+import be.seeseemelk.mockbukkit.entity.SimpleEntityMock;
+import be.seeseemelk.mockbukkit.inventory.InventoryMock;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -24,28 +15,30 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.scoreboard.ScoreboardManager;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import be.seeseemelk.mockbukkit.command.CommandResult;
-import be.seeseemelk.mockbukkit.entity.EntityMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMockFactory;
-import be.seeseemelk.mockbukkit.entity.SimpleEntityMock;
-import be.seeseemelk.mockbukkit.inventory.InventoryMock;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ServerMockTest
 {
 	private ServerMock server;
 
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		server = MockBukkit.mock();
 	}
 	
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		MockBukkit.unload();
@@ -73,8 +66,8 @@ public class ServerMockTest
 		assertEquals(player2, server.getPlayer(1));
 		
 		Set<EntityMock> entities = server.getEntities(); 
-		assertTrue("Player 1 was not registered", entities.contains(player1));
-		assertTrue("Player 2 was not registered", entities.contains(player2));
+		assertTrue(entities.contains(player1), "Player 1 was not registered");
+		assertTrue(entities.contains(player2), "Player 2 was not registered");
 	}
 	
 	@Test
@@ -102,18 +95,22 @@ public class ServerMockTest
 		assertNotEquals(player1, player2);
 	}
 	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	@Test
 	public void getPlayers_Negative_ArrayIndexOutOfBoundsException()
 	{
-		server.setPlayers(2);
-		server.getPlayer(-1);
+		assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+			server.setPlayers(2);
+			server.getPlayer(-1);
+		});
 	}
 	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	@Test
 	public void getPlayers_LargerThanNumberOfPlayers_ArrayIndexOutOfBoundsException()
 	{
-		server.setPlayers(2);
-		server.getPlayer(2);
+		assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+			server.setPlayers(2);
+			server.getPlayer(2);
+		});
 	}
 	
 	@Test
@@ -355,7 +352,7 @@ public class ServerMockTest
 	@Test
 	public void getEntities_NoEntities_EmptySet()
 	{
-		assertTrue("Entities set was not empty", server.getEntities().isEmpty());
+		assertTrue(server.getEntities().isEmpty(), "Entities set was not empty");
 	}
 	
 	@Test
@@ -366,8 +363,8 @@ public class ServerMockTest
 		server.registerEntity(entity1);
 		server.registerEntity(entity2);
 		Set<EntityMock> entities = server.getEntities();
-		assertTrue("Set did not contain first entity", entities.contains(entity1));
-		assertTrue("Set did not contain second entity", entities.contains(entity2));
+		assertTrue(entities.contains(entity1), "Set did not contain first entity");
+		assertTrue(entities.contains(entity2), "Set did not contain second entity");
 	}
 	
 	@Test

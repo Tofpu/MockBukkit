@@ -1,31 +1,30 @@
 package be.seeseemelk.mockbukkit.inventory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerInventoryMockTest
 {
 	private ServerMock server;
 	private PlayerInventoryMock inventory;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		server = MockBukkit.mock();
 		inventory = new PlayerInventoryMock(null, "Inventory");
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception
 	{
 		MockBukkit.unload();
@@ -77,16 +76,20 @@ public class PlayerInventoryMockTest
 		}
 	}
 	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	@Test
 	public void setHeldItemSlot_TooLow_Exception()
 	{
-		inventory.setHeldItemSlot(-1);
+		assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+			inventory.setHeldItemSlot(-1);
+		});
 	}
 	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	@Test
 	public void setHeldItemSlot_TooHigh_Exception()
 	{
-		inventory.setHeldItemSlot(9);
+		assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+			inventory.setHeldItemSlot(9);
+		});
 	}
 	
 	@Test
@@ -186,16 +189,20 @@ public class PlayerInventoryMockTest
 		assertEquals(helmet, inventory.getHelmet());
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void setArmorContents_Null_Exception()
 	{
-		inventory.setArmorContents(null);
+		assertThrows(NullPointerException.class, () -> {
+			inventory.setArmorContents(null);
+		});
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void setArmorContents_TooLarge_Exception()
 	{
-		inventory.setArmorContents(new ItemStack[5]);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			inventory.setArmorContents(new ItemStack[5]);
+		});
 	}
 
 }

@@ -1,22 +1,19 @@
 package be.seeseemelk.mockbukkit.scheduler;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import org.bukkit.scheduler.BukkitTask;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.bukkit.scheduler.BukkitTask;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BukkitSchedulerMockTest
 {
 	private BukkitSchedulerMock scheduler; 
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 		scheduler = new BukkitSchedulerMock();

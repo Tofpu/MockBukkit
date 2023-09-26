@@ -1,34 +1,30 @@
 package be.seeseemelk.mockbukkit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-
-import java.util.List;
-
+import be.seeseemelk.mockbukkit.block.BlockMock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import be.seeseemelk.mockbukkit.block.BlockMock;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class WorldMockTest
 {
 	private ServerMock server;
 	
-	@Before
+	@BeforeEach
 	public void setUp()
 	{
 		server = MockBukkit.mock();
 	}
 	
-	@After
+	@AfterEach
 	public void tearDown()
 	{
 		MockBukkit.unload();

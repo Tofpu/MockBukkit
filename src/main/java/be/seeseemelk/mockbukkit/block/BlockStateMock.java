@@ -1,7 +1,6 @@
 package be.seeseemelk.mockbukkit.block;
 
-import java.util.List;
-
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,7 +11,7 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import java.util.List;
 
 public class BlockStateMock implements BlockState
 {

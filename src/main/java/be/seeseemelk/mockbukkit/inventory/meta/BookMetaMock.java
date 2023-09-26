@@ -1,12 +1,11 @@
 package be.seeseemelk.mockbukkit.inventory.meta;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.base.Strings;
 import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.meta.BookMeta;
 
-import com.google.common.base.Strings;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SimplyBallistic on 26/10/2018

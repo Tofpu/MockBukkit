@@ -1,17 +1,16 @@
 package be.seeseemelk.mockbukkit.scheduler;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitWorker;
 
-import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 public class BukkitSchedulerMock implements BukkitScheduler
 {

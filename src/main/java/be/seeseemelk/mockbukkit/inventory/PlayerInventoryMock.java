@@ -1,13 +1,12 @@
 package be.seeseemelk.mockbukkit.inventory;
 
-import java.util.Arrays;
-
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import java.util.Arrays;
 
 public class PlayerInventoryMock extends InventoryMock implements PlayerInventory
 {
