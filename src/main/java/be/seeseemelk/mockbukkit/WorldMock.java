@@ -31,6 +31,10 @@ public class WorldMock implements World
 	private String name = "World";
 	private UUID uuid = UUID.randomUUID();
 	private Location spawnLocation;
+
+	private WorldType worldType = WorldType.NORMAL;
+	private long seed = 0;
+	private Environment environment = Environment.NORMAL;
 	
 	/**
 	 * Creates a new mock world.
@@ -68,6 +72,14 @@ public class WorldMock implements World
 	public WorldMock()
 	{
 		this(Material.GRASS, 4);
+	}
+
+	public WorldMock(WorldCreator creator) {
+		this();
+		this.name = creator.name();
+		this.worldType = creator.type();
+		this.seed = creator.seed();
+		this.environment = creator.environment();
 	}
 	
 	/**
@@ -479,8 +491,7 @@ public class WorldMock implements World
 	@Override
 	public List<Player> getPlayers()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return Bukkit.getOnlinePlayers().stream().filter(p -> p.getWorld() == this).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -612,15 +623,13 @@ public class WorldMock implements World
 	@Override
 	public Environment getEnvironment()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return environment;
 	}
 	
 	@Override
 	public long getSeed()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return seed;
 	}
 	
 	@Override
@@ -833,8 +842,7 @@ public class WorldMock implements World
 	@Override
 	public WorldType getWorldType()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return worldType;
 	}
 	
 	@Override

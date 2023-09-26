@@ -21,6 +21,7 @@ import org.bukkit.command.*;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.generator.ChunkGenerator.ChunkData;
 import org.bukkit.help.HelpMap;
 import org.bukkit.inventory.InventoryHolder;
@@ -739,22 +740,41 @@ public class ServerMock implements Server
 	@Override
 	public World createWorld(WorldCreator creator)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		WorldMock world = new WorldMock(creator);
+		addWorld(world);
+		return world;
+	}
+
+	private void addWorld(WorldMock world) {
+		worlds.add(world);
 	}
 
 	@Override
 	public boolean unloadWorld(String name, boolean save)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return unloadWorld(getWorld(name), save);
 	}
 
 	@Override
 	public boolean unloadWorld(World world, boolean save)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		if (!(world instanceof WorldMock)) {
+			return false;
+		}
+		if (!world.getPlayers().isEmpty()) {
+			return false;
+		}
+		WorldUnloadEvent worldUnloadEvent = new WorldUnloadEvent(world);
+		pluginManager.callEvent(worldUnloadEvent);
+
+		if (worldUnloadEvent.isCancelled()) {
+			return false;
+		}
+		return removeWorld(world);
+	}
+
+	private boolean removeWorld(World world) {
+		return worlds.remove(world);
 	}
 
 	@Override
